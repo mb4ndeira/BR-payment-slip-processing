@@ -4,9 +4,10 @@ import { IConsultBoletoResponseDTO } from './DTOs/consultBoleto';
 
 @Controller('boleto')
 export class BoletoController {
-  @Get('/:typed-line')
+  @Get('/:typed_line')
   consultBoleto(
-    @Param('typed-line') typedLine: string,
+    @Param('typed_line')
+    typedLine: string,
   ): IConsultBoletoResponseDTO {
     return {
       barCode: '21299758700000020000001121100012100447561740',
