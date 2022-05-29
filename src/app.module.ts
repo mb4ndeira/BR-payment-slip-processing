@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import { BoletoController } from './boletos/boletos.controller';
+
+import { BoletoController } from './boletos/boleto.controller';
 
 @Module({
   controllers: [BoletoController],
