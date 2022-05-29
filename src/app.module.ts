@@ -1,4 +1,7 @@
 import { Module } from '@nestjs/common';
+import { BoletoController } from './boletos/boletos.controller';
 
-@Module({})
+@Module({
+  controllers: [BoletoController],
+})
 export class AppModule {}
