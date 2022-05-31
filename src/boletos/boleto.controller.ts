@@ -2,7 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 
 import { BoletoService } from './providers/boletos.service';
 
-import { ValidateBoletoTypedLineFormatPipe } from './validate-boleto-typed-line-format.pipe';
+import { ValidateBoletoDigitableLineFormatPipe } from './validate-boleto-typed-line-format.pipe';
 
 import { IConsultBoletoResponseDTO } from './DTOs/consultBoleto';
 
@@ -10,12 +10,12 @@ import { IConsultBoletoResponseDTO } from './DTOs/consultBoleto';
 export class BoletoController {
   constructor(private boletoService: BoletoService) {}
 
-  @Get('/:typed_line')
+  @Get('/:digitable_line')
   consultBoleto(
-    @Param('typed_line', new ValidateBoletoTypedLineFormatPipe())
-    typedLine: string,
+    @Param('digitable_line', new ValidateBoletoDigitableLineFormatPipe())
+    digitableLine: string,
   ): IConsultBoletoResponseDTO {
-    const boleto = this.boletoService.getBoleto(typedLine);
+    const boleto = this.boletoService.getBoleto(digitableLine);
 
     return { ...boleto, amount: boleto.amount.toFixed(2) };
   }

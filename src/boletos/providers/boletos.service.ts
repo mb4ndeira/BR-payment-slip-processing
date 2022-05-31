@@ -11,16 +11,17 @@ import { IBoletosService } from './interfaces/IBoletosService';
 @Injectable()
 export class BoletoService implements IBoletosService {
   constructor(private boletoProcessingProvider: BoletoProcessingProvider) {}
-  getBoleto(typedLine: string): Boleto {
+  getBoleto(digitableLine: string): Boleto {
     if (
-      this.boletoProcessingProvider.validateDigitableLine(typedLine) === false
+      this.boletoProcessingProvider.validateDigitableLine(digitableLine) ===
+      false
     )
       throw new ConsultedBoletoIsNotValid(
         'dígito verificador de campo da linha digitável não corresponde',
       );
 
     const barCode =
-      this.boletoProcessingProvider.getBarCodeFromDigitableLine(typedLine);
+      this.boletoProcessingProvider.getBarCodeFromDigitableLine(digitableLine);
 
     if (this.boletoProcessingProvider.validateBarCode(barCode) === false)
       throw new ConsultedBoletoIsNotValid(
