@@ -9,6 +9,7 @@ import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from '.
 import { PaymentSlip } from '../../types/PaymentSlip';
 
 import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
+import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
 
 @Injectable()
 export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
@@ -76,11 +77,7 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
   }
 
   validateDigitableLine(digitableLine: string): boolean {
-    const fieldsIntervals = [
-      [1, 10],
-      [11, 21],
-      [22, 32],
-    ];
+    const fieldsIntervals = getDigitableLineFieldsIntervals(digitableLine);
 
     const fieldsValidity = fieldsIntervals.map((interval) => {
       const field = digitableLine.slice(interval[0] - 1, interval[1]);
