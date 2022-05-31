@@ -1,6 +1,6 @@
 interface IConsultBoletoResponseDTO {
   barCode: string;
-  amount: number;
+  amount: string;
   expirationDate: string;
 }
 
