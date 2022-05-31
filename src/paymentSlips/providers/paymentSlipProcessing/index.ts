@@ -2,18 +2,16 @@ import { Injectable } from '@nestjs/common';
 import dayjs from 'dayjs';
 import 'dayjs/locale/pt-br';
 
-import { sliceXFromYtoZ } from '../../common/utils/sliceXFromYtoZ';
+import { sliceXFromYtoZ } from '../../../common/utils/sliceXFromYtoZ';
 
-import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from '../library/calculateDigitableLineFieldVerifier';
+import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
 
-import { PaymentSlip } from '../types/PaymentSlip';
+import { PaymentSlip } from '../../types/PaymentSlip';
 
-import { IPaymentSlipProcessingProvider } from './interfaces/IPaymentSlipProcessingProvider';
+import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
 
 @Injectable()
-export class PaymentSlipProcessingProvider
-  implements IPaymentSlipProcessingProvider
-{
+export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
   getBarCodeFromDigitableLine(digitableLine: string): string {
     const barCode =
       sliceXFromYtoZ(digitableLine, 1, 3) +

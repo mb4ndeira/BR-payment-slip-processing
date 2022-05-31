@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { PaymentSlipProcessingProvider } from './PaymentSlipProcessingProvider';
+import { PaymentSlipProcessing } from './paymentSlipProcessing';
 
 import { ConsultedPaymentSlipIsNotValid } from '../exceptions/ConsultedSlipIsNotValid';
 
@@ -10,9 +10,7 @@ import { IPaymentSlipsService } from './interfaces/IPaymentSlipsService';
 
 @Injectable()
 export class PaymentSlipService implements IPaymentSlipsService {
-  constructor(
-    private paymentSlipProcessingProvider: PaymentSlipProcessingProvider,
-  ) {}
+  constructor(private paymentSlipProcessingProvider: PaymentSlipProcessing) {}
   getPaymentSlip(digitableLine: string): PaymentSlip {
     if (
       this.paymentSlipProcessingProvider.validateDigitableLine(
