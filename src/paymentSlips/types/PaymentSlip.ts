@@ -1,7 +1,7 @@
-type Boleto = {
+type PaymentSlip = {
   barCode: string;
   amount: number;
   expirationDate: string;
 };
 
-export { Boleto };
+export { PaymentSlip };

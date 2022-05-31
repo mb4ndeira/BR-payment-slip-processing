@@ -1,22 +1,22 @@
 import { APP_FILTER } from '@nestjs/core';
 import { Module } from '@nestjs/common';
 
-import { BoletoProcessingProvider } from './boletos/providers/BoletoProcessingProvider';
-import { BoletoService } from './boletos/providers/boletos.service';
+import { PaymentSlipProcessingProvider } from './paymentSlips/providers/PaymentSlipProcessingProvider';
+import { PaymentSlipService } from './paymentSlips/providers/paymentSlips.service';
 
-import { BoletoController } from './boletos/boleto.controller';
+import { PaymentSlipController } from './paymentSlips/paymentSlip.controller';
 
 import { HttpExceptionFilter } from './common/http-exception.filter';
 
 @Module({
-  controllers: [BoletoController],
+  controllers: [PaymentSlipController],
   providers: [
     {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
-    BoletoService,
-    BoletoProcessingProvider,
+    PaymentSlipService,
+    PaymentSlipProcessingProvider,
   ],
 })
 export class AppModule {}

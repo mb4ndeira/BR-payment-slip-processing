@@ -1,0 +1,45 @@
+import { Injectable } from '@nestjs/common';
+
+import { PaymentSlipProcessingProvider } from './PaymentSlipProcessingProvider';
+
+import { ConsultedPaymentSlipIsNotValid } from '../exceptions/ConsultedSlipIsNotValid';
+
+import { PaymentSlip } from '../types/PaymentSlip';
+
+import { IPaymentSlipsService } from './interfaces/IPaymentSlipsService';
+
+@Injectable()
+export class PaymentSlipService implements IPaymentSlipsService {
+  constructor(
+    private paymentSlipProcessingProvider: PaymentSlipProcessingProvider,
+  ) {}
+  getPaymentSlip(digitableLine: string): PaymentSlip {
+    if (
+      this.paymentSlipProcessingProvider.validateDigitableLine(
+        digitableLine,
+      ) === false
+    )
+      throw new ConsultedPaymentSlipIsNotValid(
+        'dígito verificador de campo da linha digitável não corresponde',
+      );
+
+    const barCode =
+      this.paymentSlipProcessingProvider.getBarCodeFromDigitableLine(
+        digitableLine,
+      );
+
+    if (this.paymentSlipProcessingProvider.validateBarCode(barCode) === false)
+      throw new ConsultedPaymentSlipIsNotValid(
+        'dígito verificador do código de barras não corresponde',
+      );
+
+    const { amount, expirationDate } =
+      this.paymentSlipProcessingProvider.retrieveDataFromBarCode(barCode);
+
+    return {
+      barCode,
+      amount,
+      expirationDate,
+    };
+  }
+}

@@ -6,12 +6,14 @@ import { sliceXFromYtoZ } from '../../common/utils/sliceXFromYtoZ';
 
 import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from '../library/calculateDigitableLineFieldVerifier';
 
-import { Boleto } from '../types/Boleto';
+import { PaymentSlip } from '../types/PaymentSlip';
 
-import { IBoletoProcessingProvider } from './interfaces/IBoletoProcessingProvider';
+import { IPaymentSlipProcessingProvider } from './interfaces/IPaymentSlipProcessingProvider';
 
 @Injectable()
-export class BoletoProcessingProvider implements IBoletoProcessingProvider {
+export class PaymentSlipProcessingProvider
+  implements IPaymentSlipProcessingProvider
+{
   getBarCodeFromDigitableLine(digitableLine: string): string {
     const barCode =
       sliceXFromYtoZ(digitableLine, 1, 3) +
@@ -26,7 +28,7 @@ export class BoletoProcessingProvider implements IBoletoProcessingProvider {
     return barCode;
   }
 
-  retrieveDataFromBarCode(barCode: string): Partial<Boleto> {
+  retrieveDataFromBarCode(barCode: string): Partial<PaymentSlip> {
     const amountDigits = sliceXFromYtoZ(barCode, 10, 19);
     const expirationDateDigits = sliceXFromYtoZ(barCode, 6, 9);
 

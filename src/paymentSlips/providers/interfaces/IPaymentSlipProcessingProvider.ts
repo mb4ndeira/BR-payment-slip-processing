@@ -1,4 +1,4 @@
-export interface IBoletoProcessingProvider {
+export interface IPaymentSlipProcessingProvider {
   getBarCodeFromDigitableLine(digitableLine: string): string;
   retrieveDataFromBarCode(barCode: string): any;
   validateBarCode(barCode: string): boolean;
