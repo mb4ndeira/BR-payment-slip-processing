@@ -1,10 +1,10 @@
 import { Controller, Get, Param } from '@nestjs/common';
 
-import { PaymentSlipService } from './providers/paymentSlips.service';
+import { PaymentSlipService } from '../providers/paymentSlips.service';
 
-import { ValidatePaymentSlipDigitableLineFormatPipe } from './providers/validate-slip-digitable-line-format.pipe';
+import { ValidatePaymentSlipDigitableLineFormatPipe } from '../providers/validate-slip-digitable-line-format.pipe';
 
-import { IConsultPaymentSlipResponseDTO } from './DTOs/consultPaymentSlip';
+import { IConsultPaymentSlipResponseDTO } from '../DTOs/consultPaymentSlip';
 
 @Controller('boleto')
 export class PaymentSlipController {
