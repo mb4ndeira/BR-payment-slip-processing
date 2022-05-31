@@ -13,9 +13,9 @@ export class ValidatePaymentSlipDigitableLineFormatPipe
         'deve conter apenas números',
       );
 
-    if (digitableLine.length !== 47)
+    if (digitableLine.length !== 47 && digitableLine.length !== 48)
       throw new ConsultedPaymentSlipIsAtWrongFormat(
-        'deve conter 47 caracteres',
+        'deve conter de 47 a 48 dígitos',
       );
 
     return digitableLine;
