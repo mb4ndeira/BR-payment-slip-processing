@@ -1,8 +1,8 @@
+import { convertToIntArray } from '../../../../common/utils/convertToIntArray';
+
 export const calculateDigitableLineFieldVerifier = (digits: string): number => {
-  const multipliedDigitsTotal = digits
-    .split('')
-    .map((digit) => parseInt(digit))
-    .reduceRight((sum, digit, index, array) => {
+  const multipliedDigitsTotal = convertToIntArray(digits).reduceRight(
+    (sum, digit, index, array) => {
       const revertedIndex = array.length - index - 1;
       const multiplier = revertedIndex % 2 == 0 ? 2 : 1;
 
@@ -14,7 +14,9 @@ export const calculateDigitableLineFieldVerifier = (digits: string): number => {
         multipliedDigit === 18 ? 9 : multipliedDigit % 9;
 
       return sum + reducedMultipliedDigit;
-    }, 0);
+    },
+    0,
+  );
 
   const verifier = 10 - (multipliedDigitsTotal % 10);
 
