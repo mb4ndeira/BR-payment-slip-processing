@@ -1,4 +1,4 @@
-import { PaymentSlipKind } from '../../../types/PaymentSlipKind';
+import { PaymentSlipKind } from '../../../types/PaymentSlip';
 
 export const barCodeCompositionFactory = (slipKind: PaymentSlipKind) => {
   const conventionalSlipBarComposition = [
