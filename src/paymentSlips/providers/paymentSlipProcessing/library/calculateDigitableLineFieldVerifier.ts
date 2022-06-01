@@ -10,11 +10,8 @@ export const calculateDigitableLineFieldVerifier = (digits: string): number => {
 
       if (multipliedDigit.toString().length < 2) return sum + multipliedDigit;
 
-      const reducedMultipliedDigit = multipliedDigit
-        .toString()
-        .split('')
-        .map((digit) => parseInt(digit))
-        .reduce((sum, character) => (sum += character), 0);
+      const reducedMultipliedDigit =
+        multipliedDigit === 18 ? 9 : multipliedDigit % 9;
 
       return sum + reducedMultipliedDigit;
     }, 0);
