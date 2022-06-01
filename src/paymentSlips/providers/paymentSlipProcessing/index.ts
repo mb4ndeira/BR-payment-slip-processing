@@ -74,7 +74,14 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
 
     const calculatedVerifier = 11 - (multipliedDigitsTotal % 11);
 
-    return calculatedVerifier.toString() == verifier;
+    const figuredVerifier =
+      calculatedVerifier === 0 || calculatedVerifier === 1
+        ? '0'
+        : calculatedVerifier === 10
+        ? '1'
+        : calculatedVerifier.toString();
+
+    return figuredVerifier === verifier;
   }
 
   validateDigitableLine(digitableLine: string): boolean {
