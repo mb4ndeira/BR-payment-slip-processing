@@ -26,7 +26,10 @@ export class PaymentSlipService implements IPaymentSlipsService {
         digitableLine,
       );
 
-    if (this.paymentSlipProcessingProvider.validateBarCode(barCode) === false)
+    if (
+      this.paymentSlipProcessingProvider.validateBarCode(barCode, type) ===
+      false
+    )
       throw new ConsultedPaymentSlipIsNotValid(
         'dígito verificador do código de barras não corresponde',
       );

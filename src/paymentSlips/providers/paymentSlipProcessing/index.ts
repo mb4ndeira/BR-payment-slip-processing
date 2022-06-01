@@ -8,7 +8,7 @@ import { barCodeCompositionFactory } from './library/barCodeCompositionFactory';
 import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
 import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
 
-import { PaymentSlip } from '../../types/PaymentSlip';
+import { PaymentSlip, PaymentSlipKind } from '../../types/PaymentSlip';
 
 import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
 
@@ -77,10 +77,14 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     return true;
   }
 
-  validateBarCode(barCode: string): boolean {
+  validateBarCode(barCode: string, slipType: PaymentSlipKind): boolean {
+    const slipIsConventional = slipType === 'conventional';
+
     const digits =
-      sliceXFromYtoZ(barCode, 1, 4) + sliceXFromYtoZ(barCode, 6, 'end');
-    const verifier = sliceXFromYtoZ(barCode, 5);
+      sliceXFromYtoZ(barCode, 1, slipIsConventional ? 4 : 3) +
+      sliceXFromYtoZ(barCode, slipIsConventional ? 6 : 5, 'end');
+
+    const verifier = sliceXFromYtoZ(barCode, slipIsConventional ? 5 : 4);
 
     const multipliedDigitsTotal = digits
       .split('')
@@ -92,7 +96,9 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
         return sum + digit * multiplier;
       }, 0);
 
-    const calculatedVerifier = 11 - (multipliedDigitsTotal % 11);
+    const calculatedVerifier = slipIsConventional
+      ? 11 - (multipliedDigitsTotal % 11)
+      : multipliedDigitsTotal % 11;
 
     const figuredVerifier =
       calculatedVerifier === 0 || calculatedVerifier === 1
