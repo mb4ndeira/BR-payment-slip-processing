@@ -19,6 +19,13 @@ export class PaymentSlipController {
     const { type, ...paymentSlip } =
       this.paymentSlipService.getPaymentSlip(digitableLine);
 
-    return { ...paymentSlip, amount: paymentSlip.amount.toFixed(2) };
+    Object.keys(paymentSlip).forEach((key) => {
+      if (paymentSlip[key] === null) delete paymentSlip[key];
+    });
+
+    return {
+      ...paymentSlip,
+      ...(paymentSlip.amount && { amount: paymentSlip.amount.toFixed(2) }),
+    };
   }
 }
