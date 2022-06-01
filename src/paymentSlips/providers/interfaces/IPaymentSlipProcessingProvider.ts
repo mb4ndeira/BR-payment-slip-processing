@@ -5,7 +5,10 @@ export interface IPaymentSlipProcessingProvider {
     type: PaymentSlipKind;
     barCode: string;
   };
-  retrieveDataFromBarCode(barCode: string): {
+  retrieveDataFromBarCode(
+    barCode: string,
+    slipType: PaymentSlipKind,
+  ): {
     amount: number;
     expirationDate: string;
   };

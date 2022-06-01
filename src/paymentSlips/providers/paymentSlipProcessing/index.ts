@@ -31,12 +31,28 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     return { type, barCode };
   }
 
-  retrieveDataFromBarCode(barCode: string): {
+  retrieveDataFromBarCode(
+    barCode: string,
+    slipType: PaymentSlipKind,
+  ): {
     amount: number;
     expirationDate: string;
   } {
-    const amountDigits = sliceXFromYtoZ(barCode, 10, 19);
-    const expirationDateDigits = sliceXFromYtoZ(barCode, 6, 9);
+    const slipIsConventional = slipType === 'conventional';
+
+    if (!slipIsConventional) {
+      const amountIdentifier = sliceXFromYtoZ(barCode, 3);
+
+      if (amountIdentifier !== '6' && amountIdentifier !== '8')
+        return {
+          amount: null,
+          expirationDate: null,
+        };
+    }
+
+    const amountDigits = slipIsConventional
+      ? sliceXFromYtoZ(barCode, 10, 19)
+      : sliceXFromYtoZ(barCode, 5, 15);
 
     const amount = parseFloat(
       `${amountDigits.slice(0, amountDigits.length - 2)}.${amountDigits.slice(
@@ -44,6 +60,10 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
       )}
     `,
     );
+
+    if (!slipIsConventional) return { amount, expirationDate: null };
+
+    const expirationDateDigits = sliceXFromYtoZ(barCode, 6, 9);
 
     const referenceDateTimestampOnDays =
       new Date('07/03/2000').getTime() / (1000 * 60 * 60 * 24);

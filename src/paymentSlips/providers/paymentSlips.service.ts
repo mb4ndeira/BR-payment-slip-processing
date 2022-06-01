@@ -35,7 +35,7 @@ export class PaymentSlipService implements IPaymentSlipsService {
       );
 
     const { amount, expirationDate } =
-      this.paymentSlipProcessingProvider.retrieveDataFromBarCode(barCode);
+      this.paymentSlipProcessingProvider.retrieveDataFromBarCode(barCode, type);
 
     return {
       type,
