@@ -65,9 +65,9 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     const multipliedDigitsTotal = digits
       .split('')
       .map((digit) => parseInt(digit))
-      .reverse()
-      .reduce((sum, digit, index) => {
-        const multiplier = (index % 8) + 2;
+      .reduceRight((sum, digit, index, array) => {
+        const revertedIndex = array.length - index - 1;
+        const multiplier = (revertedIndex % 8) + 2;
 
         return sum + digit * multiplier;
       }, 0);

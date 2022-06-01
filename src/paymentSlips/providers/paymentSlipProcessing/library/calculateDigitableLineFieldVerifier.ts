@@ -2,9 +2,9 @@ export const calculateDigitableLineFieldVerifier = (digits: string): number => {
   const multipliedDigitsTotal = digits
     .split('')
     .map((digit) => parseInt(digit))
-    .reverse()
-    .reduce((sum, digit, index) => {
-      const multiplier = index % 2 == 0 ? 2 : 1;
+    .reduceRight((sum, digit, index, array) => {
+      const revertedIndex = array.length - index - 1;
+      const multiplier = revertedIndex % 2 == 0 ? 2 : 1;
 
       const multipliedDigit = digit * multiplier;
 
