@@ -6,7 +6,11 @@
  * If this value is equals "end" the substring continues to the end of x (Behavior of 'String.slice()' without 'end' param).
  * If this value is not specified, the substring will contain only the position of y.
  */
-export const sliceXFromYtoZ = (x: string, y: number, z?: number | 'end') => {
+export const sliceXFromYtoZ = (
+  x: string,
+  y: number,
+  z?: number | 'end',
+): string => {
   if (z === undefined) return x.slice(y - 1, y);
 
   if (z === 'end') return x.slice(y - 1);
