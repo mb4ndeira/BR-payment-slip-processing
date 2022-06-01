@@ -14,4 +14,5 @@ export interface IPaymentSlipProcessingProvider {
   };
   validateDigitableLine(digitableLine: string): boolean;
   validateBarCode(barCode: string, slipType: PaymentSlipKind): boolean;
+  validateCollectionSlipAmountIdentifier(barCode: string): boolean;
 }

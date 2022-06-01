@@ -116,4 +116,16 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
 
     return figuredVerifier === verifier;
   }
+
+  validateCollectionSlipAmountIdentifier(barCode: string): boolean {
+    const identifier = sliceXFromYtoZ(barCode, 3);
+
+    const identifierIsValid =
+      identifier === '6' ||
+      identifier === '7' ||
+      identifier === '8' ||
+      identifier === '9';
+
+    return identifierIsValid;
+  }
 }
