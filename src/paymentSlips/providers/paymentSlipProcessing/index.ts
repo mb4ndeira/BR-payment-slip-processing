@@ -8,13 +8,16 @@ import { barCodeCompositionFactory } from './library/barCodeCompositionFactory';
 import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
 import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
 
-import { PaymentSlip, PaymentSlipKind } from '../../types/PaymentSlip';
+import { PaymentSlipKind } from '../../types/PaymentSlip';
 
 import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
 
 @Injectable()
 export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
-  retrieveDataFromDigitableLine(digitableLine: string): Partial<PaymentSlip> {
+  retrieveDataFromDigitableLine(digitableLine: string): {
+    type: PaymentSlipKind;
+    barCode: string;
+  } {
     const type = digitableLine.length === 47 ? 'conventional' : 'collection';
 
     const barCodeComposition = barCodeCompositionFactory(type);
@@ -28,7 +31,10 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     return { type, barCode };
   }
 
-  retrieveDataFromBarCode(barCode: string): Partial<PaymentSlip> {
+  retrieveDataFromBarCode(barCode: string): {
+    amount: number;
+    expirationDate: string;
+  } {
     const amountDigits = sliceXFromYtoZ(barCode, 10, 19);
     const expirationDateDigits = sliceXFromYtoZ(barCode, 6, 9);
 
