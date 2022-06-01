@@ -12,6 +12,7 @@ import { calculateBarCodeVerifier } from './library/calculateBarCodeVerifier';
 import { PaymentSlipKind } from '../../types/PaymentSlip';
 
 import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
+import { calculateExpirationDateFromFactor } from './library/calculateExpirationDateFromFactor';
 
 @Injectable()
 export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
@@ -64,17 +65,11 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
 
     if (!slipIsConventional) return { amount, expirationDate: null };
 
-    const expirationDateDigits = sliceXFromYtoZ(barCode, 6, 9);
+    const calculatedExpirationDate = calculateExpirationDateFromFactor(
+      sliceXFromYtoZ(barCode, 6, 9),
+    );
 
-    const referenceDateTimestampOnDays =
-      new Date('07/03/2000').getTime() / (1000 * 60 * 60 * 24);
-
-    const expirationDateTimestampOnDays =
-      referenceDateTimestampOnDays + parseInt(expirationDateDigits) - 1000;
-
-    const expirationDate = dayjs(
-      expirationDateTimestampOnDays * (1000 * 60 * 60 * 24),
-    )
+    const expirationDate = dayjs(calculatedExpirationDate)
       .locale('pt-br')
       .format('DD-MM-YYYY');
 
