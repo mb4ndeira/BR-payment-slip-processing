@@ -4,25 +4,26 @@ import 'dayjs/locale/pt-br';
 
 import { sliceXFromYtoZ } from '../../../common/utils/sliceXFromYtoZ';
 
+import { barCodeCompositionFactory } from './library/barCodeCompositionFactory';
+import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
 import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
 
 import { PaymentSlip } from '../../types/PaymentSlip';
 
 import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProcessingProvider';
-import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
 
 @Injectable()
 export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
   getBarCodeFromDigitableLine(digitableLine: string): string {
-    const barCode =
-      sliceXFromYtoZ(digitableLine, 1, 3) +
-      sliceXFromYtoZ(digitableLine, 4) +
-      sliceXFromYtoZ(digitableLine, 33) +
-      sliceXFromYtoZ(digitableLine, 34, 37) +
-      sliceXFromYtoZ(digitableLine, 38, 47) +
-      sliceXFromYtoZ(digitableLine, 5, 9) +
-      sliceXFromYtoZ(digitableLine, 11, 20) +
-      sliceXFromYtoZ(digitableLine, 22, 31);
+    const barCodeComposition = barCodeCompositionFactory(
+      digitableLine.length === 47 ? 'conventional' : 'collection',
+    );
+
+    const barCode = barCodeComposition
+      .map((interval) =>
+        sliceXFromYtoZ(digitableLine, interval[0], interval[1]),
+      )
+      .join('');
 
     return barCode;
   }
