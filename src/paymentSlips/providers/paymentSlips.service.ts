@@ -27,6 +27,16 @@ export class PaymentSlipService implements IPaymentSlipsService {
       );
 
     if (
+      type === 'collection' &&
+      this.paymentSlipProcessingProvider.validateCollectionSlipAmountIdentifier(
+        barCode,
+      ) === false
+    )
+      throw new ConsultedPaymentSlipIsNotValid(
+        'dígito identificador de valor efetivo ou referência inválido',
+      );
+
+    if (
       this.paymentSlipProcessingProvider.validateBarCode(barCode, type) ===
       false
     )
