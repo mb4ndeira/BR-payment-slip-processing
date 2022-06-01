@@ -14,10 +14,10 @@ import { IPaymentSlipProcessingProvider } from '../interfaces/IPaymentSlipProces
 
 @Injectable()
 export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
-  getBarCodeFromDigitableLine(digitableLine: string): string {
-    const barCodeComposition = barCodeCompositionFactory(
-      digitableLine.length === 47 ? 'conventional' : 'collection',
-    );
+  retrieveDataFromDigitableLine(digitableLine: string): Partial<PaymentSlip> {
+    const type = digitableLine.length === 47 ? 'conventional' : 'collection';
+
+    const barCodeComposition = barCodeCompositionFactory(type);
 
     const barCode = barCodeComposition
       .map((interval) =>
@@ -25,7 +25,7 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
       )
       .join('');
 
-    return barCode;
+    return { type, barCode };
   }
 
   retrieveDataFromBarCode(barCode: string): Partial<PaymentSlip> {
@@ -57,6 +57,26 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     };
   }
 
+  validateDigitableLine(digitableLine: string): boolean {
+    const fieldsIntervals = getDigitableLineFieldsIntervals(digitableLine);
+
+    const fieldsValidity = fieldsIntervals.map((interval) => {
+      const field = digitableLine.slice(interval[0] - 1, interval[1]);
+      const verifier = field.charAt(field.length - 1);
+
+      return calculateFieldVerifier(
+        field.slice(0, field.length - 1),
+      ).toString() !== verifier
+        ? false
+        : true;
+    });
+
+    if (fieldsValidity.some((fieldValidity) => fieldValidity === false))
+      return false;
+
+    return true;
+  }
+
   validateBarCode(barCode: string): boolean {
     const digits =
       sliceXFromYtoZ(barCode, 1, 4) + sliceXFromYtoZ(barCode, 6, 'end');
@@ -82,25 +102,5 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
         : calculatedVerifier.toString();
 
     return figuredVerifier === verifier;
-  }
-
-  validateDigitableLine(digitableLine: string): boolean {
-    const fieldsIntervals = getDigitableLineFieldsIntervals(digitableLine);
-
-    const fieldsValidity = fieldsIntervals.map((interval) => {
-      const field = digitableLine.slice(interval[0] - 1, interval[1]);
-      const verifier = field.charAt(field.length - 1);
-
-      return calculateFieldVerifier(
-        field.slice(0, field.length - 1),
-      ).toString() !== verifier
-        ? false
-        : true;
-    });
-
-    if (fieldsValidity.some((fieldValidity) => fieldValidity === false))
-      return false;
-
-    return true;
   }
 }

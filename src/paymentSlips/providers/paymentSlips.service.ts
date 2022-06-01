@@ -21,8 +21,8 @@ export class PaymentSlipService implements IPaymentSlipsService {
         'dígito verificador de campo da linha digitável não corresponde',
       );
 
-    const barCode =
-      this.paymentSlipProcessingProvider.getBarCodeFromDigitableLine(
+    const { type, barCode } =
+      this.paymentSlipProcessingProvider.retrieveDataFromDigitableLine(
         digitableLine,
       );
 
@@ -35,6 +35,7 @@ export class PaymentSlipService implements IPaymentSlipsService {
       this.paymentSlipProcessingProvider.retrieveDataFromBarCode(barCode);
 
     return {
+      type,
       barCode,
       amount,
       expirationDate,

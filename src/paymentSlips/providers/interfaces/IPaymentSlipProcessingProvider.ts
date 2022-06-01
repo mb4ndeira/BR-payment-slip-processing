@@ -1,6 +1,8 @@
+import { PaymentSlip } from '../../types/PaymentSlip';
+
 export interface IPaymentSlipProcessingProvider {
-  getBarCodeFromDigitableLine(digitableLine: string): string;
-  retrieveDataFromBarCode(barCode: string): any;
-  validateBarCode(barCode: string): boolean;
+  retrieveDataFromDigitableLine(digitableLine: string): Partial<PaymentSlip>;
+  retrieveDataFromBarCode(barCode: string): Partial<PaymentSlip>;
   validateDigitableLine(digitableLine: string): boolean;
+  validateBarCode(barCode: string): boolean;
 }

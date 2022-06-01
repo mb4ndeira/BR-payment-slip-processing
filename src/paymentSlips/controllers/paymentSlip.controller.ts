@@ -15,7 +15,9 @@ export class PaymentSlipController {
     @Param('digitable_line', new ValidatePaymentSlipDigitableLineFormatPipe())
     digitableLine: string,
   ): IConsultPaymentSlipResponseDTO {
-    const paymentSlip = this.paymentSlipService.getPaymentSlip(digitableLine);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { type, ...paymentSlip } =
+      this.paymentSlipService.getPaymentSlip(digitableLine);
 
     return { ...paymentSlip, amount: paymentSlip.amount.toFixed(2) };
   }
