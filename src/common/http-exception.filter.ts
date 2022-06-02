@@ -6,21 +6,21 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 
-import { ErrorResponseObject } from './Types/ErrorResponseObject';
+import { ErrorResponse } from './Types/ErrorResponseObject';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException | unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
-    const response: Response<ErrorResponseObject> = ctx.getResponse();
+    const response: Response<ErrorResponse> = ctx.getResponse();
     const request = ctx.getRequest<Request>();
 
     if (exception instanceof HttpException) {
       const { statusCode, message, error } =
-        exception.getResponse() as Partial<ErrorResponseObject>;
+        exception.getResponse() as Partial<ErrorResponse>;
       const status = statusCode || exception.getStatus();
 
-      const errorResponseObject: ErrorResponseObject = {
+      const errorResponseObject: ErrorResponse = {
         statusCode: status,
         timestamp: new Date().toISOString(),
       };
