@@ -1,6 +1,6 @@
 import { convertToIntArray } from '../../../../common/utils/convertToIntArray';
 
-export const calculateDigitableLineFieldVerifier = (digits: string): number => {
+export const calculateFieldVerifier = (digits: string): number => {
   const multipliedDigitsTotal = convertToIntArray(digits).reduceRight(
     (sum, digit, index, array) => {
       const revertedIndex = array.length - index - 1;

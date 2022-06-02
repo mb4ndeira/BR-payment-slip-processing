@@ -6,8 +6,8 @@ import { sliceXFromYtoZ } from '../../../common/utils/sliceXFromYtoZ';
 
 import { barCodeCompositionFactory } from './library/barCodeCompositionFactory';
 import { getDigitableLineFieldsIntervals } from './library/getDigitableLineFieldsIntervals';
-import { calculateDigitableLineFieldVerifier as calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
-import { calculateBarCodeVerifier } from './library/calculateBarCodeVerifier';
+import { calculateFieldVerifier } from './library/calculateDigitableLineFieldVerifier';
+import { calculateGeneralVerifier } from './library/calculateBarCodeVerifier';
 
 import { PaymentSlipKind } from '../../types/PaymentSlip';
 
@@ -100,12 +100,16 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
   }
 
   validateBarCode(barCode: string, slipType: PaymentSlipKind): boolean {
-    const verifier = sliceXFromYtoZ(
-      barCode,
-      slipType === 'conventional' ? 5 : 4,
-    );
+    const slipIsConventional = slipType === 'conventional';
 
-    const calculatedVerifier = calculateBarCodeVerifier(barCode, slipType);
+    const digits =
+      sliceXFromYtoZ(barCode, 1, slipIsConventional ? 4 : 3) +
+      sliceXFromYtoZ(barCode, slipIsConventional ? 6 : 5, 'end');
+    const verifier = sliceXFromYtoZ(barCode, slipIsConventional ? 5 : 4);
+
+    const calculatedVerifier = slipIsConventional
+      ? calculateGeneralVerifier(digits)
+      : calculateFieldVerifier(digits);
 
     const figuredVerifier =
       calculatedVerifier === 0 || calculatedVerifier === 1
