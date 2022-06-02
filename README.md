@@ -40,6 +40,14 @@ Run the image with the 'p' flag to allow port forwarding of the container's '808
   docker run -p $host_port:8080 mbandeira/br-payment-slip-processing
 ```
 
+**For development**
+
+ The 'v' flag creates a container volume synchronized with the repository, enabling hot reloading use.
+
+```bash
+  docker run -p $host_port:8080 -v $PWD:/usr/src/app mbandeira/br-payment-slip-processing
+```
+
 ### Running from GitHub repository 
 
 The service can also be downloaded as git repository to be managed and ran with a package manager (I used Yarn, but... Doesn't really matter, does it?):
