@@ -50,7 +50,7 @@ export class PaymentSlipsService implements IPaymentSlipsService {
     return {
       type,
       barCode,
-      amount,
+      ...(amount && { amount: amount.toFixed(2) }),
       expirationDate,
     };
   }

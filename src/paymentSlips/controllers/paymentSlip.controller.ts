@@ -46,9 +46,6 @@ export class PaymentSlipController {
       if (paymentSlip[key] === null) delete paymentSlip[key];
     });
 
-    return {
-      ...paymentSlip,
-      ...(paymentSlip.amount && { amount: paymentSlip.amount.toFixed(2) }),
-    };
+    return paymentSlip;
   }
 }
