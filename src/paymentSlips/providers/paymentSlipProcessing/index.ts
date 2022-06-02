@@ -71,7 +71,7 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
 
     const expirationDate = dayjs(calculatedExpirationDate)
       .locale('pt-br')
-      .format('DD-MM-YYYY');
+      .format('YYYY-MM-DD');
 
     return {
       amount,
