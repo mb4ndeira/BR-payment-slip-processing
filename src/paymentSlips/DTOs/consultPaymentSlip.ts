@@ -1,5 +1,5 @@
 export class ConsultPaymentSlipResponseDTO {
   barCode: string;
-  amount: string;
+  amount?: string;
   expirationDate?: string;
 }
