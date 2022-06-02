@@ -9,7 +9,7 @@ import { PaymentSlip } from '../types/PaymentSlip';
 import { IPaymentSlipsService } from './interfaces/IPaymentSlipsService';
 
 @Injectable()
-export class PaymentSlipService implements IPaymentSlipsService {
+export class PaymentSlipsService implements IPaymentSlipsService {
   constructor(private paymentSlipProcessingProvider: PaymentSlipProcessing) {}
   getPaymentSlip(digitableLine: string): PaymentSlip {
     if (

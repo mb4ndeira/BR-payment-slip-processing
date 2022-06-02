@@ -6,7 +6,7 @@ import {
   ApiOperation,
 } from '@nestjs/swagger';
 
-import { PaymentSlipService } from '../providers/paymentSlips.service';
+import { PaymentSlipsService } from '../providers/paymentSlips.service';
 
 import { ValidatePaymentSlipDigitableLineFormatPipe } from '../providers/validate-slip-digitable-line-format.pipe';
 
@@ -17,7 +17,7 @@ import { ConsultPaymentSlipResponseDTO } from '../DTOs/consultPaymentSlip';
 @Controller('boleto')
 @ApiTags('Boletos')
 export class PaymentSlipController {
-  constructor(private paymentSlipService: PaymentSlipService) {}
+  constructor(private paymentSlipService: PaymentSlipsService) {}
 
   @Get('/:digitable_line')
   @ApiOperation({
