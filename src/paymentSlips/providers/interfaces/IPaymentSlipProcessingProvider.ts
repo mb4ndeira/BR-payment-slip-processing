@@ -10,7 +10,7 @@ export interface IPaymentSlipProcessingProvider {
     slipType: PaymentSlipKind,
   ): {
     amount: number;
-    expirationDate: string;
+    expirationDate: Date;
   };
   validateDigitableLine(digitableLine: string): boolean;
   validateBarCode(barCode: string, slipType: PaymentSlipKind): boolean;

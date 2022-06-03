@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import dayjs from 'dayjs';
-import 'dayjs/locale/pt-br';
 
 import { sliceXFromYtoZ } from '../../../common/utils/sliceXFromYtoZ';
 
@@ -38,7 +36,7 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
     slipType: PaymentSlipKind,
   ): {
     amount: number;
-    expirationDate: string;
+    expirationDate: Date;
   } {
     const slipIsConventional = slipType === 'conventional';
 
@@ -65,13 +63,9 @@ export class PaymentSlipProcessing implements IPaymentSlipProcessingProvider {
 
     if (!slipIsConventional) return { amount, expirationDate: null };
 
-    const calculatedExpirationDate = calculateExpirationDateFromFactor(
+    const expirationDate = calculateExpirationDateFromFactor(
       sliceXFromYtoZ(barCode, 6, 9),
     );
-
-    const expirationDate = dayjs(calculatedExpirationDate)
-      .locale('pt-br')
-      .format('YYYY-MM-DD');
 
     return {
       amount,

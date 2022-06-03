@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import dayjs from 'dayjs';
+import 'dayjs/locale/pt-br';
 
 import { PaymentSlipProcessing } from './paymentSlipProcessing';
 
@@ -51,7 +53,11 @@ export class PaymentSlipsService implements IPaymentSlipsService {
       type,
       barCode,
       ...(amount && { amount: amount.toFixed(2) }),
-      expirationDate,
+      ...(expirationDate && {
+        expirationDate: dayjs(expirationDate)
+          .locale('pt-br')
+          .format('YYYY-MM-DD'),
+      }),
     };
   }
 }
