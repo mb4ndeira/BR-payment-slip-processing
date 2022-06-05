@@ -14,6 +14,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response: Response<ErrorResponse> = ctx.getResponse();
     const request = ctx.getRequest<Request>();
+    const requestDate = new Date().toISOString();
 
     if (exception instanceof HttpException) {
       const { statusCode, message, error } =
@@ -22,7 +23,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       const errorResponseObject: ErrorResponse = {
         statusCode: status,
-        timestamp: new Date().toISOString(),
+        timestamp: requestDate,
       };
       if (message !== undefined) errorResponseObject.message = message;
       if (error !== undefined) errorResponseObject.error = error;
@@ -37,16 +38,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
         console.warn(weakInstancesWarning);
       }
 
-      response.status(status).json(errorResponseObject);
+      response
+        .status(status)
+        .set('Date', requestDate)
+        .json(errorResponseObject);
       return;
     }
 
     console.error(exception);
 
-    response.status(500).json({
+    response.status(500).set('Date', requestDate).json({
       statusCode: 500,
       error: 'Internal server error',
-      timestamp: new Date().toISOString(),
+      timestamp: requestDate,
     });
   }
 }
