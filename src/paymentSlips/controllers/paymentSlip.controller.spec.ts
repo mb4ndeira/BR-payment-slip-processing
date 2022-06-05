@@ -12,7 +12,7 @@ describe('PaymentSlipController', () => {
   const mockPaymentSlipsService: IPaymentSlipsService = {
     getPaymentSlip: jest.fn(() => ({
       type: 'conventional',
-      barCode: '21299758700000020000001121100012100447561740',
+      barcode: '21299758700000020000001121100012100447561740',
       amount: '20.00',
       expirationDate: '2018-07-16',
     })),
@@ -40,7 +40,7 @@ describe('PaymentSlipController', () => {
         '21290001192110001210904475617405975870000002000',
       ),
     ).toEqual({
-      barCode: '21299758700000020000001121100012100447561740',
+      barcode: '21299758700000020000001121100012100447561740',
       amount: '20.00',
       expirationDate: '2018-07-16',
     });

@@ -23,7 +23,7 @@ export class PaymentSlipsService implements IPaymentSlipsService {
         'dígito verificador de campo da linha digitável não corresponde',
       );
 
-    const { type, barCode } =
+    const { type, barcode } =
       this.paymentSlipProcessingProvider.retrieveDataFromDigitableLine(
         digitableLine,
       );
@@ -31,7 +31,7 @@ export class PaymentSlipsService implements IPaymentSlipsService {
     if (
       type === 'collection' &&
       this.paymentSlipProcessingProvider.validateCollectionSlipAmountIdentifier(
-        barCode,
+        barcode,
       ) === false
     )
       throw new ConsultedPaymentSlipIsNotValid(
@@ -39,7 +39,7 @@ export class PaymentSlipsService implements IPaymentSlipsService {
       );
 
     if (
-      this.paymentSlipProcessingProvider.validateBarCode(barCode, type) ===
+      this.paymentSlipProcessingProvider.validateBarcode(barcode, type) ===
       false
     )
       throw new ConsultedPaymentSlipIsNotValid(
@@ -47,11 +47,11 @@ export class PaymentSlipsService implements IPaymentSlipsService {
       );
 
     const { amount, expirationDate } =
-      this.paymentSlipProcessingProvider.retrieveDataFromBarCode(barCode, type);
+      this.paymentSlipProcessingProvider.retrieveDataFromBarcode(barcode, type);
 
     return {
       type,
-      barCode,
+      barcode,
       ...(amount && { amount: amount.toFixed(2) }),
       ...(expirationDate && {
         expirationDate: dayjs(expirationDate)

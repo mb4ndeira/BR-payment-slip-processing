@@ -40,9 +40,9 @@ describe('PaymentSlipsService', () => {
         .map((key) => examples[key])
         .find((example) => example.digitableLine === digitableLine);
 
-      return { type, barCode: barcode };
+      return { type, barcode };
     },
-    retrieveDataFromBarCode: () => ({
+    retrieveDataFromBarcode: () => ({
       amount: 20,
       expirationDate: new Date(1531699200000),
     }),
@@ -50,7 +50,7 @@ describe('PaymentSlipsService', () => {
       digitableLine === examples['conventionalWithInvalidField'].digitableLine
         ? false
         : true,
-    validateBarCode: (barcode: string) =>
+    validateBarcode: (barcode: string) =>
       barcode === examples['conventionalWithInvalidBarcode'].barcode
         ? false
         : true,
@@ -83,7 +83,7 @@ describe('PaymentSlipsService', () => {
       service.getPaymentSlip(examples['validConventional'].digitableLine),
     ).toEqual({
       type: 'conventional',
-      barCode: '21299758700000020000001121100012100447561740',
+      barcode: '21299758700000020000001121100012100447561740',
       amount: '20.00',
       expirationDate: '2018-07-16',
     });

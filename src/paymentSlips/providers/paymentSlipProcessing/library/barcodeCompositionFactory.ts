@@ -1,6 +1,6 @@
 import { PaymentSlipKind } from '../../../types/PaymentSlip';
 
-export const barCodeCompositionFactory = (slipKind: PaymentSlipKind) => {
+export const barcodeCompositionFactory = (slipKind: PaymentSlipKind) => {
   const conventionalSlipBarComposition = [
     [1, 3],
     [4],
@@ -19,10 +19,10 @@ export const barCodeCompositionFactory = (slipKind: PaymentSlipKind) => {
     [37, 47],
   ];
 
-  const barCodeCompositionOf = {
+  const barcodeCompositionOf = {
     conventional: conventionalSlipBarComposition,
     collection: collectionSlipBarComposition,
   };
 
-  return barCodeCompositionOf[slipKind];
+  return barcodeCompositionOf[slipKind];
 };

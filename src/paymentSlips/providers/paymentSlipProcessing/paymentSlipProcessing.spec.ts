@@ -24,13 +24,13 @@ describe('PaymentSlipProcessing', () => {
       ),
     ).toEqual({
       type: 'conventional',
-      barCode: '21299758700000020000001121100012100447561740',
+      barcode: '21299758700000020000001121100012100447561740',
     });
   });
 
   it('should retrieve data from conventional payment slip barcode', () => {
     expect(
-      provider.retrieveDataFromBarCode(
+      provider.retrieveDataFromBarcode(
         '21299758700000020000001121100012100447561740',
         'conventional',
       ),
@@ -42,7 +42,7 @@ describe('PaymentSlipProcessing', () => {
 
   it('should retrieve data from collection payment slip barcode', () => {
     expect(
-      provider.retrieveDataFromBarCode(
+      provider.retrieveDataFromBarcode(
         '84670000001435900240200240500024384221010811',
         'collection',
       ),
@@ -70,7 +70,7 @@ describe('PaymentSlipProcessing', () => {
 
   it('should validate a barcode', () => {
     expect(
-      provider.validateBarCode(
+      provider.validateBarcode(
         '21299758700000020000001121100012100447561740',
         'conventional',
       ),
@@ -79,7 +79,7 @@ describe('PaymentSlipProcessing', () => {
 
   it('should not validate an invalid barcode', () => {
     expect(
-      provider.validateBarCode(
+      provider.validateBarcode(
         '21299758700000020000001121100012100447561741',
         'conventional',
       ),

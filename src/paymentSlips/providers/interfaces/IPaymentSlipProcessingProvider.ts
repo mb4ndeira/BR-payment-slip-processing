@@ -3,16 +3,16 @@ import { PaymentSlipKind } from '../../types/PaymentSlip';
 export interface IPaymentSlipProcessingProvider {
   retrieveDataFromDigitableLine(digitableLine: string): {
     type: PaymentSlipKind;
-    barCode: string;
+    barcode: string;
   };
-  retrieveDataFromBarCode(
-    barCode: string,
+  retrieveDataFromBarcode(
+    barcode: string,
     slipType: PaymentSlipKind,
   ): {
     amount: number;
     expirationDate: Date;
   };
   validateDigitableLine(digitableLine: string): boolean;
-  validateBarCode(barCode: string, slipType: PaymentSlipKind): boolean;
-  validateCollectionSlipAmountIdentifier(barCode: string): boolean;
+  validateBarcode(barcode: string, slipType: PaymentSlipKind): boolean;
+  validateCollectionSlipAmountIdentifier(barcode: string): boolean;
 }

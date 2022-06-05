@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class ConsultPaymentSlipResponseDTO {
   @ApiProperty()
-  barCode: string;
+  barcode: string;
 
   @ApiPropertyOptional()
   amount?: string;
