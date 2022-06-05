@@ -28,7 +28,7 @@ class MockThrowingController {
         statusCode: 400,
         message: 'Invalid request: error description',
         error: 'Bad Request',
-        timestamp: new Date().toISOString(),
+        date: new Date().toISOString(),
       },
       400,
     );
@@ -66,7 +66,7 @@ describe('PaymentSlipsService', () => {
         expect(response.body).toEqual({
           statusCode: 500,
           error: 'Internal server error',
-          timestamp: response.header.date,
+          date: response.header.date,
         }),
       );
 
@@ -82,7 +82,7 @@ describe('PaymentSlipsService', () => {
       .then((response) => {
         expect(response.body).toEqual({
           statusCode: 500,
-          timestamp: response.header.date,
+          date: response.header.date,
         });
       });
 
@@ -100,7 +100,7 @@ describe('PaymentSlipsService', () => {
           error: 'Bad Request',
           message: 'Invalid request: error description',
           statusCode: 400,
-          timestamp: response.header.date,
+          date: response.header.date,
         });
       });
   });

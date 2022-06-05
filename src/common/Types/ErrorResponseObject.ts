@@ -11,5 +11,5 @@ export class ErrorResponse {
   error?: string;
 
   @ApiProperty()
-  timestamp: string;
+  date: string;
 }

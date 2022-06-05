@@ -23,7 +23,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
       const errorResponseObject: ErrorResponse = {
         statusCode: status,
-        timestamp: requestDate,
+        date: requestDate,
       };
       if (message !== undefined) errorResponseObject.message = message;
       if (error !== undefined) errorResponseObject.error = error;
@@ -50,7 +50,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     response.status(500).set('Date', requestDate).json({
       statusCode: 500,
       error: 'Internal server error',
-      timestamp: requestDate,
+      date: requestDate,
     });
   }
 }
