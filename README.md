@@ -4,8 +4,8 @@ This service is an brazillian payment slip processing API (based on the FEBRABAN
 
 **Resources:**
 
-- Consuming documentation (['/docs'](http://ec2-18-230-74-173.sa-east-1.compute.amazonaws.com/docs/))
-- AWS deploy [endpoint](http://ec2-18-230-74-173.sa-east-1.compute.amazonaws.com/) (Currently out due to billing limitations)
+- Consuming documentation (['/docs'](https://mbandeira-br-payment-slip-processing-production.up.railway.app/docs/))
+- Deploy [endpoint](https://mbandeira-br-payment-slip-processing-production.up.railway.app) (Migrated from [AWS](https://aws.amazon.com/) to [Railway](https://railway.app/) due to billing policies)
 - Insomnia [collection](/assets/Insomnia_collection.json)
 - Regulatory documentation: [Boletos de cobrança](https://storage.googleapis.com/slite-api-files-production/files/b8def5e9-f732-4749-88ea-25270cb71c4d/Titulo.pdf); [Guias de Arrecadação](https://storage.googleapis.com/slite-api-files-production/files/222c4ec7-9056-4149-aa42-e66b135f523a/Convenio.pdf)
 
